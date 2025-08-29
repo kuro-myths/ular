@@ -1,35 +1,36 @@
-nama: Hasilkan Animasi Ular
+name: Generate Snake Animation
 
 on:
- jadwal: # jalan otomatis tiap hari jam 00:00 UTC
-    - cron: "0 0 * * *"0 0 * * *"
- workflow_dispatch: # bisa dijalankan manual dari tab Actions
+  schedule: # jalan otomatis tiap hari jam 00:00 UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch: # bisa dijalankan manual dari tab Actions
 
 jobs:
- build:
- berjalan: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # <── WAJIB supaya bisa push branch output
 
- langkah:
-      # Langkah 1: repositori checkout
-      - nama: Checkout repo
- menggunakan: tindakan/checkout@v3
+    steps:
+      # Step 1: checkout repository
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       # Step 2: Generate Snake animation dari kontribusi GitHub
-      - nama: Hasilkan Ular 🐍
- menggunakan: Platane/snk@v3
- dengan:
- github_nama_pengguna: kuro-mitos
- keluaran: |
- dist/github-snake.svg
- dist/github-snake-dark.svg?palet=github-dark
- dist/github-snake.gif?color_snake=green&color_dots=#ebedf0,#c6e48b,#7bc96f,#239a3b,#196127
+      - name: Generate Snake 🐍
+        uses: Platane/snk@v3
+        with:
+          github_user_name: kuro-myths
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+            dist/github-snake.gif?color_snake=green&color_dots=#ebedf0,#c6e48b,#7bc96f,#239a3b,#196127
 
       # Step 3: Push hasilnya ke branch output
-      - nama: Dorong ke cabang keluaran
- menggunakan: crazy-max/ghaction-github-pages@v4
- dengan:
- target_branch: keluaran
- build_dir: dist
- env:
- GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
