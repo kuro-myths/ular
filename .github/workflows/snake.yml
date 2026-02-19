@@ -26,6 +26,23 @@ jobs:
             dist/github-snake-dark.svg?palette=github-dark
             dist/github-snake.gif?color_snake=green&color_dots=#ebedf0,#c6e48b,#7bc96f,#239a3b,#196127
 
+      # Step 2b: Generate Ocean / Ghost Contribution GIF
+      - name: Generate Ocean Ghost 👻
+        uses: Platane/snk@v3
+        with:
+          github_user_name: kuro-myths
+          outputs: |
+            dist/ocean.gif?color_snake=orange&color_dots=#000,#0a1929,#0d47a1,#1565c0,#1976d2
+
+      # Step 2c: Generate Dino Grid Snake SVG
+      - name: Generate Dino Contribution 🦖
+        uses: Platane/snk@v3
+        with:
+          github_user_name: kuro-myths
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+
       # Step 3: Push hasilnya ke branch output
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v4
